@@ -1,0 +1,53 @@
+import pandas as pd
+import plotly.express as px
+
+
+df = pd.read_csv('air_quality_with_aqi_and_quality.csv')
+
+df['latitude'] = df['latitude'] * -1
+df['longitude'] = df['longitude'] * -1
+
+#temperatura
+fig = px.density_mapbox(
+    df, 
+    lat='latitude', 
+    lon='longitude', 
+    z='Temperature', 
+    radius=10, 
+    center=dict(lat=df['latitude'].mean(), lon=df['longitude'].mean()), 
+    zoom=5, 
+    mapbox_style="carto-positron"
+)
+
+fig.update_layout(title='Mapa de Calor da Temperatura', title_x=0.5)
+fig.show()
+
+#humidade
+fig2 = px.density_mapbox(
+    df, 
+    lat='latitude', 
+    lon='longitude', 
+    z='Humidity', 
+    radius=10, 
+    center=dict(lat=df['latitude'].mean(), lon=df['longitude'].mean()), 
+    zoom=5, 
+    mapbox_style="carto-positron"
+)
+
+fig2.update_layout(title='Mapa de Calor da Umidade', title_x=0.5)
+fig2.show()
+
+# PM2.5
+fig3 = px.density_mapbox(
+    df, 
+    lat='latitude', 
+    lon='longitude', 
+    z='pm2_5', 
+    radius=10, 
+    center=dict(lat=df['latitude'].mean(), lon=df['longitude'].mean()), 
+    zoom=5, 
+    mapbox_style="carto-positron"
+)
+
+fig3.update_layout(title='Mapa de Calor de PM2.5', title_x=0.5)
+fig3.show()
